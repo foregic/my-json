@@ -1,6 +1,5 @@
-//
-// Created by Administrator on 2021/9/15.
-//
+
+
 
 #include "light_json.h"
 #include <bits/stdc++.h>
@@ -8,77 +7,40 @@
 using std::string;
 
 
-//enum Json_value_type {
-//    Json_value_type_null,      //¿ÕÀàĞÍ
-//    Json_value_type_number,    //Êı×ÖÀàĞÍ
-//    Json_value_type_string,    //×Ö·û´®ÀàĞÍ
-//    Json_value_type_bool,      //Âß¼­ÀàĞÍ
-//    Json_value_type_list,      //ÁĞ±íÀàĞÍ
-//    Json_value_type_dict       //×ÖµäÀàĞÍ
-//};
-
-
-
-
-
-std::ostream &operator<<(std::ostream &os, Json_obj &js) {
+std::ostream &operator<<(std::ostream &os, const Json_obj &js) {
     os << js.data;
     return os;
 }
 
 Json_obj::~Json_obj() {
-    std::cout << "Json_objÎö¹¹" << std::endl;
+//    std::cout << "Json_objææ„" << std::endl;
 
-}
-
-
-Json_obj Parser::get_obj(const string &str) {
-    assert(str.size() >= 0);
-    if (str[0] == '\"') {
-        return make_json_obj<Json_string>(str);
-    } else if (str[0] == 'f' || str[0] == 't') {
-        return make_json_obj<Json_bool>(str);
-    } else if (str[0] == 'n') {
-        return make_json_obj<Json_null>(str);
-    } else if (str[0] >= '0' || str[0] <= '9') {
-        return make_json_obj<Json_number>(str);
-    } else {
-        throw std::invalid_argument("´íÎó×Ö¶Î" + str);
-    }
 }
 
 
 Json_value::~Json_value() {
-    std::cout << "Json_valueÎö¹¹" << std::endl;
+//    std::cout << "Json_valueææ„" << std::endl;
 }
 
-
-std::ostream &operator<<(std::ostream &o, const Json_string &js) {
-    o << js.data;
-    return o;
-}
 
 Json_string::~Json_string() {
-    std::cout << "Json_stringÎö¹¹" << std::endl;
+//    std::cout << "Json_stringææ„" << std::endl;
 }
 
 
 Json_number::Json_number(std::string &s) {
     m_type = Json_value_type_number;
-    data = std::stol(s);
+    data = std::stold(s);
 }
 
 
-.
-std::ostream &operator<<(std::ostream &os, std::shared_ptr<Json_value> &js);
-
-std::ostream &operator<<(std::ostream &os, Json_number &js) {
+std::ostream &operator<<(std::ostream &os, const Json_number &js) {
     os << js.data;
     return os;
 }
 
 Json_number::~Json_number() {
-    std::cout << "Json_numberÎö¹¹" << std::endl;
+//    std::cout << "Json_numberææ„" << std::endl;
 }
 
 
@@ -89,11 +51,11 @@ Json_bool::Json_bool(std::string &s) {
     } else if (s == "false") {
         data = false;
     } else {
-        throw std::invalid_argument("´íÎóµÄ²¼¶û³õÊ¼»¯Öµ");
+        throw std::invalid_argument("é”™è¯¯çš„å¸ƒå°”åˆå§‹åŒ–å€¼");
     }
 }
 
-std::ostream &operator<<(std::ostream &os, Json_bool &js) {
+std::ostream &operator<<(std::ostream &os, const Json_bool &js) {
     if (js.data) {
         os << "true";
     } else {
@@ -103,20 +65,20 @@ std::ostream &operator<<(std::ostream &os, Json_bool &js) {
 }
 
 Json_bool::~Json_bool() {
-    std::cout << "Json_boolÎö¹¹" << std::endl;
+//    std::cout << "Json_boolææ„" << std::endl;
 }
 
 
-std::ostream &operator<<(std::ostream &os, Json_null &js) {
+std::ostream &operator<<(std::ostream &os, const Json_null &js) {
     os << "null";
     return os;
 }
 
 
-std::ostream &operator<<(std::ostream &os, Json_dict &js) {
+std::ostream &operator<<(std::ostream &os, const Json_dict &js) {
     os << "{\r\n";
     for (auto &d:js.dict) {
-        os << "\r\n" + d.first + " : ";
+        os << "\"" + d.first + "\" : ";
         os << d.second << ',';
     }
     os << "\r\n}";
@@ -124,16 +86,11 @@ std::ostream &operator<<(std::ostream &os, Json_dict &js) {
 }
 
 Json_dict::~Json_dict() {
-    std::cout << "Json_dict" << std::endl;
+//    std::cout << "Json_dictææ„" << std::endl;
 }
 
 
-Json_list::Json_list(const std::string &s) {
-    m_type = Json_value_type_list;
-}
-
-
-std::ostream &operator<<(std::ostream &os, Json_list &js) {
+std::ostream &operator<<(std::ostream &os, const Json_list &js) {
     os << "[\r\n";
     for (auto &li : js.list) {
         os << "\r\n" << li << ',';
@@ -144,36 +101,37 @@ std::ostream &operator<<(std::ostream &os, Json_list &js) {
 
 
 Json_list::~Json_list() {
-    std::cout << "Json_listÎö¹¹" << std::endl;
-
+//    std::cout << "Json_listææ„" << std::endl;
 
 }
 
 
-std::ostream &operator<<(std::ostream &os, std::shared_ptr<Json_value> &js) {
+std::ostream &operator<<(std::ostream &os, const std::shared_ptr<Json_value> &js) {
     switch (js->m_type) {
         case Json_value_type_string: {
-            os << *dynamic_cast<Json_string *>(js.get()) << ',';
+//            Json_string js_string =*dynamic_cast<Json_string *>(js.get());
+//            os << js_string;
+            os << *dynamic_cast<Json_string *>(js.get());
         }
             break;
         case Json_value_type_dict: {
-            os << *dynamic_cast<Json_dict *>(js.get()) << ',';
+            os << *dynamic_cast<Json_dict *>(js.get());
         }
             break;
         case Json_value_type_list: {
-            os << *dynamic_cast<Json_list *>(js.get()) << ',';
+            os << *dynamic_cast<Json_list *>(js.get());
         }
             break;
         case Json_value_type_number: {
-            os << *dynamic_cast<Json_number *>(js.get()) << ',';
+            os << *dynamic_cast<Json_number *>(js.get());
         }
             break;
         case Json_value_type_bool: {
-            os << *dynamic_cast<Json_bool *>(js.get()) << ',';
+            os << *dynamic_cast<Json_bool *>(js.get());
         }
             break;
         case Json_value_type_null: {
-            os << *dynamic_cast<Json_null *>(js.get()) << ',';
+            os << *dynamic_cast<Json_null *>(js.get());
         }
             break;
 
@@ -181,31 +139,388 @@ std::ostream &operator<<(std::ostream &os, std::shared_ptr<Json_value> &js) {
     return os;
 }
 
+std::ostream &operator<<(std::ostream &os, const Json_string &js) {
+    os << '\"' << js.data << '\"';
+    return os;
+}
+
+Json_null::Json_null(const std::string &str) {
+    if (str != "null") {
+        throw std::invalid_argument("é”™è¯¯çš„nullåˆå§‹å€¼");
+    }
+    data = "null";
+}
+
+Json_obj &Json_list::operator[](const int &pos) {
+    if (pos >= this->list.size()) {
+        throw std::out_of_range("ä½ç½®è¶Šç•Œ");
+    }
+    return this->list[pos];
+}
+
+void Json_list::append(Json_obj &js) {
+    this->list.push_back(js);
+}
+
+void Json_list::append(const Json_obj &js) {
+    this->list.push_back(js);
+}
+
+void Json_list::clear() {
+    this->list.clear();
+}
+
+size_t Json_list::size() {
+    return this->list.size();
+}
+
+bool Json_list::empty() {
+    return this->list.empty();
+}
+
 Json_obj &Json_dict::operator[](const string &str) {
     if (!dict.count(str)) {
-        throw std::invalid_argument("¸Ã¶ÔÏóÃ»ÓĞ×Ö¶Î" + str);
+        throw std::invalid_argument("è¯¥å¯¹è±¡æ²¡æœ‰å­—æ®µ" + str);
     }
     return dict[str];
 }
 
+void Json_dict::insert(const string &str, const Json_obj &json) {
+    this->dict[str] = json;
+}
+
+void Json_dict::insert(string &str, Json_obj &json) {
+    this->dict[str] = json;
+}
+
+Json_obj get_obj(const std::string &str) {
+    int pos = 0;
+    Json_obj ans;
+    while (pos < str.size() && str[pos] == ' ') {
+        pos++;
+    }
+    switch (str[pos]) {
+        case '{': {
+            ans = get_dict(str, ++pos);
+            while (str[pos] == ' ') {
+                pos++;
+            }
+            if (str[pos] == '}')
+                pos++;
+            break;
+        }
+        case '[': {
+            ans = get_list(str, ++pos);
+            while (str[pos] == ' ') {
+                pos++;
+            }
+            if (str[pos] == ']')
+                pos++;
+            break;
+        }
+        case '\"': {
+            ans = get_string(str, ++pos);
+            while (str[pos] == ' ') {
+                pos++;
+            }
+            break;
+        }
+        case 'n':
+            ans = get_null(str, pos);
+            while (str[pos] == ' ') {
+                pos++;
+            }
+            break;
+        case 't' | 'f':
+            ans = get_bool(str, pos);
+            while (str[pos] == ' ') {
+                pos++;
+            }
+            break;
+        case '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0': {
+            ans = get_number(str, pos);
+            while (str[pos] == ' ') {
+                pos++;
+            }
+            break;
+        }
+    }
+
+    while (str[pos] == ' ') {
+        pos++;
+    }
+    if (pos >= str.size()) {
+        std::cout << "è§£æå®Œæˆ" << std::endl;
+    } else {
+        throw std::invalid_argument("æ— æ•ˆçš„jsonè¯­å¥");
+    }
+    return ans;
+
+}
+
+Json_obj get_string(const std::string &str, int &pos) {
+
+    if (str[pos] == '\"') {
+        ++pos;
+    }
+    std::string tmp;
+    while (str[pos] != '\"') {
+        tmp.push_back(str[pos]);
+        pos++;
+    }
+    pos++;
+
+    return Json_obj(Json_string(tmp));
+
+}
+
+Json_obj get_number(const std::string &str, int &pos) {
+
+    std::string tmp;
+    while (str[pos]=='.' || (str[pos] >= '0' && str[pos] <= '9')) {
+        tmp.push_back(str[pos]);
+        pos++;
+    }
+    return Json_obj(Json_number(tmp));
+}
+
+Json_obj get_bool(const std::string &str, int &pos) {
+
+    std::string tmp;
+    while (str[pos] != ',' && str[pos] != '}' && str[pos] != ']') {
+        tmp.push_back(str[pos]);
+        pos++;
+    }
+    return Json_obj(Json_bool(tmp));
+}
+
+Json_obj get_null(const std::string &str, int &pos) {
+
+    std::string tmp = "null";
+    pos += 4;
+    return Json_obj(Json_null(tmp));
+}
 
 
+Json_obj get_dict(const std::string &str, int &pos) {
+    Json_dict tmp_dict;
+    if (str[pos] == '}') {
+        ++pos;
+        return Json_obj(tmp_dict);
+    }
+    while (pos < str.size()) {
+        while (str[pos] == ' ') {
+            pos++;
+        }
+        if (str[pos] == '\"') {
+            pos++;
+        }
+        std::string first;
+        while (str[pos] != '\"') {
+            first += str[pos];
+            pos++;
+        }
+        if (str[pos] == '\"') {
+            pos++;
+        }
+        if (str[pos] == ':') {
+            pos++;
+        }
+        Json_obj second;
+        while (str[pos] == ' ') {
+            pos++;
+        }
+        if (str[pos] == '{') {
+            second = get_dict(str, ++pos);
+        } else if (str[pos] == '[') {
+            second = get_list(str, ++pos);
+        } else if (str[pos] == '\"') {
+            second = get_string(str, pos);
+        } else if (str[pos] == 'n') {
+            second = get_null(str, pos);
+        } else if (str[pos] == 't' || str[pos] == 'f') {
+            second = get_bool(str, pos);
+        } else if (str[pos] >= '0' && str[pos] <= '9') {
+            second = get_number(str, pos);
+        } else {
+            std::cout << str.substr(pos,pos+10) << std::endl;
+            throw std::invalid_argument("æ— æ•ˆçš„dictè§£æ");
+        }
+        if (first.empty() || second.is_empty()) {
+            throw std::invalid_argument("é”™è¯¯çš„dictåˆ†æå€¼");
+        }
+        tmp_dict.insert(first, second);
+        while (str[pos] == ' ') {
+            pos++;
+        }
+        if (str[pos] == '}') {
+            pos++;
+            return Json_obj(tmp_dict);
+        }
+        if (str[pos] == ',') {
+            pos++;
+        }
+        while (str[pos] == ' ') {
+            pos++;
+        }
+    }
+}
+
+Json_obj get_list(const std::string &str, int &pos) {
+    Json_list tmp_list;
+    if (str[pos] == ']') {
+        ++pos;
+        return Json_obj(tmp_list);
+    }
+    while (pos < str.size()) {
+        while (str[pos] == ' ') {
+            pos++;
+        }
+        Json_obj tmp_obj;
+
+        if (str[pos] == '{') {
+            tmp_obj = get_dict(str, ++pos);
+        } else if (str[pos] == '[') {
+            tmp_obj = get_list(str, ++pos);
+        } else if (str[pos] == '\"') {
+            tmp_obj = get_string(str, pos);
+        } else if (str[pos] == 'n') {
+            tmp_obj = get_null(str, pos);
+        } else if (str[pos] == 't' || str[pos] == 'f') {
+            tmp_obj = get_bool(str, pos);
+        } else if (str[pos] >= '0' && str[pos] <= '9') {
+            tmp_obj = get_number(str, pos);
+        } else {
+            throw std::invalid_argument("æ— æ•ˆçš„listè§£æ");
+        }
+        if (tmp_obj.is_empty()) {
+            throw std::invalid_argument(str + std::to_string(pos) + "ä½ç½®å¤„åªæœ‰','ç¼ºå°‘å¯¹è±¡");
+        }
+        tmp_list.append(tmp_obj);
+        while (str[pos] == ' ') {
+            pos++;
+        }
+        if (str[pos] == ']') {
+            pos++;
+            return Json_obj(tmp_list);
+        }
+        if (str[pos] == ',') {
+            pos++;
+        }
+    }
+}
 
 
+Json_obj::Json_obj(const Json_string &js) {
+    this->data = std::make_shared<Json_value>(js);
+}
+
+Json_obj::Json_obj(const Json_bool &js) {
+    this->data = std::make_shared<Json_value>(js);
+}
+
+Json_obj::Json_obj(const Json_null &js) {
+    this->data = std::make_shared<Json_value>(js);
+}
+
+Json_obj::Json_obj(const Json_number &js) {
+    this->data = std::make_shared<Json_value>(js);
+}
+
+Json_obj::Json_obj(const Json_dict &js) {
+    this->data = std::make_shared<Json_value>(js);
+}
+
+Json_obj::Json_obj(const Json_list &js) {
+    this->data = std::make_shared<Json_value>(js);
+}
 
 
+bool Json_dict::contains(const std::string &str) {
+    if (!dict.count(str)) {
+        return false;
+    }
+    return true;
+}
+
+void Json_dict::clear() {
+    this->dict.clear();
+}
+
+size_t Json_dict::size() {
+    return this->dict.size();
+}
+
+bool Json_dict::empty() {
+    return this->dict.empty();
+}
 
 
+bool Json_obj::is_empty() {
+    if (data == nullptr) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Json_obj &Json_obj::operator[](const std::string &str) {
+    if (this->data->get_type() == Json_value_type_dict) {
+        return (*dynamic_cast<Json_dict *>(this->data.get()))[str];
+    } else {
+        throw std::invalid_argument("è¯¥å¯¹è±¡ä¸æ˜¯ä¸€ä¸ªdict");
+    }
+}
+
+Json_obj &Json_obj::operator[](const int &pos) {
+    if (this->data->get_type() == Json_value_type_list) {
+        return (*dynamic_cast<Json_list *>(this->data.get()))[pos];
+    } else {
+        throw std::invalid_argument("è¯¥å¯¹è±¡ä¸æ˜¯ä¸€ä¸ªlist");
+    }
+
+}
 
 
+Json_obj &Json_obj::operator=(const Json_obj &js) {
+    this->data = js.data;
+}
 
+Json_obj &Json_obj::operator=(const std::string &str) {
+    *this = get_obj(str);
+}
 
+void Json_obj::clear() {
+    if (this->get_type() == Json_value_type_list) {
+        dynamic_cast<Json_list *>(this->data.get())->clear();
+    } else if (this->get_type() == Json_value_type_dict) {
+        dynamic_cast<Json_dict *>(this->data.get())->clear();
+    } else {
+        throw std::invalid_argument("è¯¥å¯¹è±¡ä¸æ˜¯dictæˆ–listï¼Œæ— æ³•æ¸…é™¤å†…å®¹");
+    }
+}
 
+size_t Json_obj::size() {
+    if (this->get_type() == Json_value_type_list) {
+        return dynamic_cast<Json_list *>(this->data.get())->size();
+    } else if (this->get_type() == Json_value_type_dict) {
+        return dynamic_cast<Json_dict *>(this->data.get())->size();
+    } else {
+        throw std::invalid_argument("è¯¥å¯¹è±¡ä¸æ˜¯dictæˆ–listæ— sizeå±æ€§");
+    }
+}
 
+Json_value_type Json_obj::get_type() const {
+    return this->data->get_type();
+}
 
-
-
-
+void Json_obj::append(const string &str) {
+    if (this->get_type() == Json_value_type_list) {
+        dynamic_cast<Json_list *>(this->data.get())->append(get_obj(str));
+    } else {
+        throw std::invalid_argument("è¯¥å¯¹è±¡ä¸æ˜¯listï¼Œæ— æ³•æ·»åŠ å¯¹è±¡");
+    }
+}
 
 
 

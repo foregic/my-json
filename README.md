@@ -4,9 +4,9 @@
 
 ### 基本思想
 因为list和dict中的值可以是null、string、number、bool、dict、list中的任何一种，因此不能使用固定的类型
-所以使用父类指针，null、string、number、bool、dict、list集成Json_value，Json_value指针可以指向任意子类对象
+所以使用父类指针，null、string、number、bool、dict、list继承Json_value，Json_value指针可以指向任意子类对象
 
-为了避免忘记释放内存导致内存泄漏使用智能指正管理资源，同时也可以在Json对象赋值给别的Json对象时，节省内存空间
+为了避免忘记释放内存导致内存泄漏使用智能指针管理资源，同时也可以在Json对象赋值给别的Json对象时，节省内存空间
 
 ![https://github.com/foregic/my-json/blob/main/images/Json%E8%A7%A3%E6%9E%90%E5%99%A8.png]()
 

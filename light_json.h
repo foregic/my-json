@@ -7,7 +7,7 @@
 
 #include <bits/stdc++.h>
 
-#include <utility>
+
 
 
 enum Json_value_type {
@@ -128,9 +128,6 @@ protected:
 public:
     Json_obj() : data(nullptr) {}
 
-    void set(std::shared_ptr<Json_value> p) {
-        data = std::move(p);
-    }
 
     bool is_empty();
 
@@ -167,7 +164,6 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const std::shared_ptr<Json_value> &js);
 
-    friend class Parser;
 
     virtual ~Json_obj();
 };

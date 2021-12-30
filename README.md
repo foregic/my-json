@@ -9,7 +9,6 @@
 
 为了避免忘记释放内存导致内存泄漏使用智能指针管理资源，同时也可以在Json对象赋值给别的Json对象时，节省内存空间
 
-<<<<<<< HEAD
 ![](https://github.com/foregic/my-json/blob/main/images/Json_value%E8%A7%A3%E6%9E%90%E5%99%A8.png)
 ![]()
 
